@@ -1,0 +1,21 @@
+# ==== Python backend ====
+backend/venv/
+backend/__pycache__/
+*.pyc
+
+# ==== frontend (React) ====
+frontend/node_modules/
+frontend/.vscode/
+frontend/.idea/
+frontend/dist/
+frontend/build/
+
+# ==== 共通でいらないやつ ====
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# ==== 環境変数 ====
+.env
+*.env

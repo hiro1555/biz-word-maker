@@ -1,0 +1,13 @@
+.export-area{
+    height: 60%;
+    width: 100%;
+    border-radius: 8px;
+    border: 3px solid #ccc;
+    text-align: center;
+    padding: 15px;
+    white-space: pre-wrap;
+}
+
+.result-title{
+    padding-bottom: 15px;
+}
