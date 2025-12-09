@@ -79,13 +79,14 @@ async def call_huggingface(prompt: str):
 @app.post("/generate")
 async def generate_text(data: RequestData):
     prompt = (
-        f"{data.theme}というテーマで、リアリティのあるものを１、ないものを０としてリアリティ {data.number} の架空ビジネス用語を1つ生成してください。\n"
-        "カタカナ語は使ってもよいですが、必ず日本語で出力してください\n"
-        "形式：\n"
+        f"次の条件を厳守して出力してください。\n"
+        "1. 出力は必ず日本語のみ。\n"
+        "2. 記号 *, **, ★, ■ などの装飾は禁止。句読点以外の記号は使わない。\n"
+        "3. 現実には存在しない、テーマ「{data.theme}」に関連した架空のビジネス用語を1つだけ生成する。\n"
+        "4. リアリティの度合いは {data.number}（1は現実っぽい、0は非現実）。\n"
+        "5. 出力形式は以下のみ。余分な文章は禁止。\n"
         "用語: <用語>\n"
         "説明: <説明>\n"
-        "※現実の用語は禁止\n"
-        "出力に *, **, ★, ■ などの記号を使わないでください。\n"
     )
 
     hf_res = await call_huggingface(prompt)

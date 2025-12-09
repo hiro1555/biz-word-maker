@@ -6,6 +6,7 @@
     display: flex;
     gap: 20px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .control-button{
@@ -13,4 +14,19 @@
     justify-content: center;
     width: 100%;
     padding: 20px 0;
+}
+
+body {
+  background: #0f1724;
+  color: #e6eef8;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 20px;
+}
+
+@media (max-width: 640px) {
+    body{
+        font-size: 10px;
+    }
 }

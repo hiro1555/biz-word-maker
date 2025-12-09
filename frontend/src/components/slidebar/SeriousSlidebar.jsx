@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./SeriousSlidebar.css"
 
 function SeriousSlidebar({value,onChange}){
