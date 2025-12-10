@@ -7,7 +7,7 @@ import SeriousSlidebar from "./components/slidebar/SeriousSlidebar";
 import './App.css'
 
 function App(){
-    const [selectedIndustry, setSelectedIndustry] = useState("");
+    const [selectedIndustry, setSelectedIndustry] = useState("全般");
     const [seriousValue, setSeriousValue] = useState(0.5);
 
     const sendJson = useSendJson();

@@ -1,7 +1,7 @@
 import React from "react";
 import "./IndustrySelect.css"
 
-const industryList = ["IT","金融","医療","製造"];
+const industryList = ["全般","IT","金融","医療","製造"];
 function IndustrySelect({value,onChange}){
     return (
         <>
