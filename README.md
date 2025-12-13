@@ -1,8 +1,8 @@
-プロジェクト概要
+## プロジェクト概要
 
-本プロジェクトは、React (Create React App) と FastAPI (Python 3.12) を用いて構築したユーザー入力をもとに架空のビジネス用語を自動生成するwebアプリケーションです。フロントエンドはユーザー入力を受け取り、バックエンドへ JSON を送信します。バックエンドでは HuggingFace API を利用してモデルへの問い合わせを行い、その結果をフロントに返します。
+本プロジェクトは、React (Create React App) と FastAPI (Python 3.12) を用いて構築したユーザー入力をもとに架空のビジネス用語を自動生成するweb アプリケーションです。フロントエンドはユーザー入力を受け取り、バックエンドへ JSON を送信します。バックエンドでは HuggingFace API を利用して言語モデルへの問い合わせを行い、その結果をフロントエンドに返します。
 
-使用技術
+## 使用技術
 
 Frontend
 
@@ -20,9 +20,9 @@ Backend
 
 - HuggingFace Inference API
 
-- Uvicorn
+- uvicorn
 
-フォルダ構成
+## フォルダ構成
 ```
 project/
 │
@@ -40,8 +40,10 @@ project/
 └─ README.md
 ```
 
-セットアップ
-Backend（FastAPI）
+## セットアップ
+
+### Backend（FastAPI）
+
 1. 仮想環境の作成
 ```
 python -m venv venv
@@ -58,13 +60,13 @@ source venv/bin/activate
 ```
 3. 依存関係のインストール
 ```
-pip install fastapi uvicorn requests
+pip install -r requirements.txt
 ```
 4. 開発サーバー起動
 ```
 uvicorn main:app --reload
 ```
-Frontend（React）
+### Frontend（React）
 1. 依存関係インストール
 ```
 npm install
@@ -73,15 +75,22 @@ npm install
 ```
 npm start
 ```
-API フロー
+
+## デプロイに関する注意
+
+本アプリケーションのサーバーサイドは Render の無料プランでデプロイしています。
+そのため、一定時間アクセスがない場合はスリープ状態になり、
+初回アクセス時に約30秒〜1分程度の起動時間がかかることがあります。
+
+## API フロー
 
 1. フロントエンドから JSON を FastAPI へ送信
 
 2. FastAPI が HuggingFace API にリクエストを送信
 
-3. モデルから返ってきたレスポンスをフロントに返却
+3. 生成結果を整形してフロントに返却
 
-環境変数
+## 環境変数
 
 HuggingFace API キーは以下のように .env ファイルで管理します。（Git には含めません）
 ```

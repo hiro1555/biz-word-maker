@@ -2,14 +2,19 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+
 import os
 import httpx
 import re
 from dotenv import load_dotenv
 
+# 環境変数の読み込み
 load_dotenv()
+
+# FastAPI アプリ生成
 app = FastAPI()
 
+# CORS 設定
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://biz-word-maker.vercel.app"],
@@ -18,6 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# エラーレスポンスを共通の形に整える
 def error_response(message: str, status: int):
     return JSONResponse(
         status_code=status,
@@ -29,24 +35,29 @@ def error_response(message: str, status: int):
         }
     )
 
+# バリデーションや処理結果不正など想定内の例外
 class AppLogicError(Exception):
     def __init__(self, message: str):
         self.message = message
 
+# AppLogicError を 400 BadRequest として返す共通ハンドラ
 @app.exception_handler(AppLogicError)
 def logic_error_handler(request, exc: AppLogicError):
     return error_response(exc.message, 400)
 
+# HuggingFace API 設定
 HF_API_KEY = os.getenv("HF_API_KEY")
 if HF_API_KEY is None:
     print("警告: HF_API_KEY が設定されていません。")
 
 HF_API_URL = "https://router.huggingface.co/v1/chat/completions"
 
+#リクエストボディの型定義
 class RequestData(BaseModel):
     theme: str
     number: float
 
+# HuggingFace API 呼び出し用関数
 async def call_huggingface(prompt: str):
     headers = {
         "Authorization": f"Bearer {HF_API_KEY}",
@@ -66,8 +77,6 @@ async def call_huggingface(prompt: str):
     except Exception as e:
         raise AppLogicError(f"HuggingFace への通信に失敗しました: {str(e)}")
 
-    print("HF RESP:", response.text)
-
     if response.status_code != 200:
         raise HTTPException(
             status_code=500,
@@ -76,6 +85,7 @@ async def call_huggingface(prompt: str):
 
     return response.json()
 
+#API本体
 @app.post("/generate")
 async def generate_text(data: RequestData):
     prompt = (
@@ -91,18 +101,17 @@ async def generate_text(data: RequestData):
 
     hf_res = await call_huggingface(prompt)
     text = hf_res["choices"][0]["message"]["content"]
+
+    #出力結果から用語と説明を分割抽出
     term_match = re.search(r"用語[:：]\s*\**\s*(.+)", text)
     description_match = re.search(r"説明[:：]\s*\**\s*(.+)", text)
-
-    term = term_match.group(1).strip() if term_match else ""
-    description = description_match.group(1).strip() if description_match else ""
 
     if not term_match or not description_match:
         raise AppLogicError("生成結果の解析に失敗しました。出力形式を確認してください。")
 
     return {
-        "term": term,
-        "description": description,
+        "term": term_match.group(1).strip(),
+        "description": description_match.group(1).strip(),
         "raw": text
     }
 
