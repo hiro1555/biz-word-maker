@@ -1,4 +1,4 @@
-import "./SeriousSlidebar.css"
+import "./SeriousSlidebar.css";
 
 function SeriousSlidebar({value,onChange}){
     return(

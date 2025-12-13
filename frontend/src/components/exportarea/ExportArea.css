@@ -1,5 +1,5 @@
 .export-area{
-    height: 60%;
+    min-height: 200px;
     width: 100%;
     border-radius: 8px;
     border: 3px solid #ccc;

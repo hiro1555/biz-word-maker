@@ -1,10 +1,10 @@
 import React from "react";
-import './ExportArea.css'
+import './ExportArea.css';
 
 function ExportArea({isLoading,result,error}){
     return (
         <div className ="export-area">
-            {isLoading&&<p>用語を生成中</p>}
+            {isLoading&&<p>用語を生成中...</p>}
             {!isLoading && error && <p>{error}</p>}
             {!isLoading && result && (
                 <div className="result-box">

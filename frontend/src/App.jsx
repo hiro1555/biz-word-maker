@@ -3,7 +3,7 @@ import { useState } from "react";
 import ExportArea from "./components/exportarea/ExportArea";
 import { useSendJson } from "./components/sendjson/SendJson";
 import IndustrySelect from "./components/industryselect/IndustrySelect";
-import SeriousSlidebar from "./components/slidebar/SeriousSlidebar";
+import SeriousSlidebar from "./components/seriousslidebar/SeriousSlidebar";
 import './App.css'
 
 function App(){
@@ -16,7 +16,7 @@ function App(){
             theme:selectedIndustry,
             number:seriousValue
         });
-    }
+    };
     return (
         <>
             <div className="intro">
